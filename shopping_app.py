@@ -1,0 +1,72 @@
+shopping_list = {
+    "milk": 2,
+    "bread": 1,
+    "eggs": 12
+}
+
+def view_items(items_list):
+    print("\nYour shopping list:")
+
+    for item, quantity in items_list.items():
+        print(f"{item}: {quantity}")
+
+def add_item(items_list):
+    item_to_add = input("What item would you like to add? ").strip().lower()
+
+    while True:
+        try:
+            quantity_to_add = int(input("How many? "))
+
+            if quantity_to_add <= 0:
+                print("Please enter a quantity greater than 0.")
+            else:
+                if item_to_add in items_list:
+                    items_list[item_to_add] += quantity_to_add
+                else:
+                    items_list[item_to_add] = quantity_to_add
+
+                print(f"Added {quantity_to_add} {item_to_add}.")
+                break
+
+        except ValueError:
+            print("Please enter the quantity as a number.")
+
+def remove_item(items_list):
+    item_to_remove = input("What item would you like to remove? ").strip().lower()
+
+    if item_to_remove in items_list:
+        del items_list[item_to_remove]
+        print(f"Removed {item_to_remove}.")
+
+    else:
+        print(f"{item_to_remove} is not in your shopping list.")
+    
+def main():
+
+    while True:
+        option = input("""
+        --- Shopping List ---
+
+        1. View items
+        2. Add item
+        3. Remove item
+        4. Exit
+
+        Choose an option: """)
+        if option == "1":
+            view_items(shopping_list)
+
+        elif option == "2":
+            add_item(shopping_list)
+                
+        elif option == "3":
+            remove_item(shopping_list)
+
+        elif option == "4":
+            print("Goodbye!")
+            break
+
+        else:
+            print("Invalid option.")
+
+main()
