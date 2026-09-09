@@ -10,26 +10,29 @@ def view_items(items_list):
     for item, quantity in items_list.items():
         print(f"{item}: {quantity}")
 
+def get_positive_integer(prompt):
+    while True:
+        try:
+            number = int(input(prompt))
+            if number <= 0:
+                print("Please enter a number greater than 0.")
+            else:
+                return number
+        except ValueError:
+            print("Please enter a number.")
+
 def add_item(items_list):
     item_to_add = input("What item would you like to add? ").strip().lower()
 
-    while True:
-        try:
-            quantity_to_add = int(input("How many? "))
+    quantity_to_add = get_positive_integer("How many? ")
 
-            if quantity_to_add <= 0:
-                print("Please enter a quantity greater than 0.")
-            else:
-                if item_to_add in items_list:
-                    items_list[item_to_add] += quantity_to_add
-                else:
-                    items_list[item_to_add] = quantity_to_add
+    if item_to_add in items_list:
+        items_list[item_to_add] += quantity_to_add
+    else:
+        items_list[item_to_add] = quantity_to_add
 
-                print(f"Added {quantity_to_add} {item_to_add}.")
-                break
+    print(f"Added {quantity_to_add} {item_to_add}.")
 
-        except ValueError:
-            print("Please enter the quantity as a number.")
 
 def remove_item(items_list):
     item_to_remove = input("What item would you like to remove? ").strip().lower()
@@ -69,4 +72,5 @@ def main():
         else:
             print("Invalid option.")
 
-main()
+if __name__ == "__main__":
+    main()
