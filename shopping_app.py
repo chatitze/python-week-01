@@ -1,8 +1,17 @@
-shopping_list = {
-    "milk": 2,
-    "bread": 1,
-    "eggs": 12
-}
+import json
+
+def save_items(items_list):
+    with open("shopping_list.json", "w") as file:
+        json.dump(items_list, file)
+
+def load_items():
+    try:
+        with open("shopping_list.json", "r") as file:
+            return json.load(file)
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
 
 def view_items(items_list):
     print("\nYour shopping list:")
@@ -31,6 +40,7 @@ def add_item(items_list):
     else:
         items_list[item_to_add] = quantity_to_add
 
+    save_items(items_list)
     print(f"Added {quantity_to_add} {item_to_add}.")
 
 
@@ -39,12 +49,15 @@ def remove_item(items_list):
 
     if item_to_remove in items_list:
         del items_list[item_to_remove]
+        save_items(items_list)
         print(f"Removed {item_to_remove}.")
 
     else:
         print(f"{item_to_remove} is not in your shopping list.")
     
 def main():
+
+    shopping_list = load_items() 
 
     while True:
         option = input("""
